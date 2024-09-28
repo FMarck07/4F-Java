@@ -1,0 +1,171 @@
+import java.util.Random;
+import java.util.Scanner;
+
+import static utility.Tools.*;
+
+public class NumeriCasuali {
+    public static void main(String[] args) {
+        Scanner tastiera = new Scanner(System.in);
+        String[] opzioni = {"Menu", "1 - Random", "2 - Genera senza duplicati", "3 - Visualizza", "4 - Ricerca", "5 - Elimina e ricompatta", "6 - Elimina e crea nuovo vettore", "7 - Fine"};
+        boolean esci = true;
+        Random rd = new Random();
+        final int MAXNUMERI = 10;
+        int[] vettore = new int[MAXNUMERI];
+        int contanumeri = 0;  // Conta quanti numeri sono stati generati
+
+        do {
+            switch (Menu(opzioni, tastiera)) {
+                case 1:
+                    System.out.println("Generazione numeri random");
+                    generaNumeri(vettore);
+                    contanumeri = vettore.length;
+                    break;
+                case 2:
+                    System.out.println("Generazione numeri random senza duplicati");
+                    generaNumeri2(vettore);
+                    contanumeri = vettore.length;
+                    break;
+                case 3:
+                    System.out.println("Visualizza vettore");
+                    Visualizza(vettore, contanumeri);
+                    break;
+                case 4:
+                    if (contanumeri > 0) {
+                        System.out.println("Inserisci un numero da cercare all'interno del vettore");
+                        int numero = Integer.parseInt(tastiera.nextLine());
+                        int posizione = trovato(vettore, numero, contanumeri);
+                        if (posizione == -1) {
+                            System.out.println("Numero non trovato");
+                        } else {
+                            System.out.printf("Numero trovato nella posizione %d\n", posizione + 1);
+                        }
+                    } else {
+                        System.out.println("Non ci sono elementi all'interno del vettore");
+                    }
+                    break;
+                case 5:
+                    // Elimina e ricompatta il vettore
+                    if (contanumeri > 0) {
+                        System.out.println("Inserisci un numero da eliminare");
+                        int num = Integer.parseInt(tastiera.nextLine());
+                        int posizione = trovato(vettore, num, contanumeri);
+                        if (posizione != -1) {
+                            System.out.printf("Numero trovato nella posizione %d\n", posizione + 1);
+                            contanumeri = cancellaContatto(vettore, posizione, contanumeri); // Ricompatta
+                            Visualizza(vettore, contanumeri); // Visualizza il vettore aggiornato
+                        } else {
+                            System.out.println("Numero non trovato");
+                        }
+                    } else {
+                        System.out.println("Non ci sono numeri all'interno del vettore");
+                    }
+                    break;
+                case 6:
+                    // Elimina e crea un nuovo vettore completo
+                    if (contanumeri > 0) {
+                        System.out.println("Inserisci un numero da eliminare");
+                        int num = Integer.parseInt(tastiera.nextLine());
+                        int posizione = trovato(vettore, num, contanumeri);
+                        if (posizione != -1) {
+                            System.out.printf("Numero trovato nella posizione %d\n", posizione + 1);
+                            vettore = cancellaContattoENuovoVettore(vettore, num, contanumeri); // Crea nuovo vettore
+                            Visualizza(vettore, contanumeri); // Visualizza il nuovo vettore
+                        } else {
+                            System.out.println("Numero non trovato");
+                        }
+                    } else {
+                        System.out.println("Non ci sono numeri all'interno del vettore");
+                    }
+                    break;
+                case 7:
+                    esci = false;
+                    break;
+            }
+        } while (esci);
+    }
+
+    // Metodo per generare numeri casuali
+    public static void generaNumeri(int[] vettore) {
+        Random n = new Random();
+        for (int i = 0; i < vettore.length; i++) {
+            vettore[i] = n.nextInt(1, 100) + 1;
+        }
+    }
+
+    // Metodo per generare numeri casuali senza duplicati
+    public static void generaNumeri2(int[] vettore) {
+        Random numeroRandom = new Random();
+        int numero; // numero da generare e inserire nel vettore
+        int cont = 0; // verifica quanti numeri sono presenti senza ripetizioni
+
+        do {
+            numero = numeroRandom.nextInt(1, 100) + 1;
+            boolean presente = false; // true se numero presente, false se no
+
+            for (int i = 0; i < cont; i++) { // Controlla se il numero è già presente
+                if (vettore[i] == numero) {
+                    presente = true;
+                }
+            }
+
+            if (!presente) { // se non è presente lo aggiungo all'array
+                vettore[cont] = numero;
+                cont++;
+            }
+        } while (cont < vettore.length);
+    }
+
+    // Metodo per cancellare un elemento ricompattando il vettore
+    public static int cancellaContatto(int[] vettore, int posizione, int contanumeri) {
+        // Sposta tutti gli elementi a partire dalla posizione dell'elemento eliminato
+        for (int i = posizione; i < contanumeri - 1; i++) {
+            vettore[i] = vettore[i + 1]; // Sposta gli elementi indietro di una posizione
+        }
+        vettore[contanumeri - 1] = 0; // Azzera l'ultimo elemento (opzionale, per chiarezza)
+        return --contanumeri; // Riduci il contatore degli elementi
+    }
+
+    // Metodo per cancellare un elemento e restituire un nuovo vettore completo
+    public static int[] cancellaContattoENuovoVettore(int[] vettore, int numero, int contanumeri) {
+        int posizione = trovato(vettore, numero, contanumeri);
+
+        if (posizione == -1) {
+            System.out.println("Valore non presente nel vettore.");
+            return vettore;  // Ritorna il vettore originale se il numero non esiste
+        }
+
+        int[] nuovoVettore = new int[vettore.length]; // Nuovo vettore della stessa lunghezza
+        int indiceNuovo = 0; // Indice per il nuovo vettore
+
+        // Copia tutti gli elementi tranne quello da eliminare
+        for (int i = 0; i < contanumeri; i++) {
+            if (i != posizione) { // Se l'indice non è quello del numero da eliminare
+                nuovoVettore[indiceNuovo++] = vettore[i];
+            }
+        }
+
+        System.out.println("Valore cancellato correttamente.");
+        return nuovoVettore; // Ritorna il nuovo vettore completo
+    }
+
+    // Metodo per visualizzare il vettore
+    public static void Visualizza(int[] vettore, int contanumeri) {
+        if (vettore != null && contanumeri > 0) {
+            for (int i = 0; i < contanumeri; i++) {
+                System.out.println(vettore[i]);
+            }
+        } else {
+            System.out.println("Il vettore è vuoto o non è stato ancora generato.");
+        }
+    }
+
+    // Metodo per cercare un numero all'interno del vettore
+    public static int trovato(int[] vettore, int numero, int contanumeri) {
+        for (int i = 0; i < contanumeri; i++) {
+            if (vettore[i] == numero) {
+                return i; // Restituisci la posizione appena trovi il numero
+            }
+        }
+        return -1; // Numero non trovato
+    }
+}
