@@ -2,6 +2,7 @@ public class Auto {
     private String scuderia;
     private Pilota pilota;
     private double cilindrata;
+    // Ciao
 
     public Auto(String scuderia, Pilota pilota, double cilindrata) {
         if (cilindrata <= 0) {

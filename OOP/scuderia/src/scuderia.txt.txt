@@ -1,0 +1,8 @@
+Creare classe "Pilota" che contiene nome , cognome, nazionalità, età;
+Creare classe "Auto" che contiene una scuderia(stringa), il pilota, cilindrata; 
+Creare le classi definite con metodi ed i costruttori considerando che le classi devono implementare i metodi toString ed il metodo Equals, gestendo eventuali eccezioni che si potrebbero generare.
+Verificare la funzionalità delle classi considerando che non possono esistere due piloti con lo stesso nome, cognome ed età
+Creare la classe gara considerando una gara è composta dal nome della gara, da un risultato e da una collezione di auto.
+Definire il metodo corriGara che permette di correre una gara e determinarne il risultato (nome del pilota vincitore).
+Considerando gli attributi delle classi create determinare un soluzione per il metodo corriGara.
+Testare il codice realizzato.
