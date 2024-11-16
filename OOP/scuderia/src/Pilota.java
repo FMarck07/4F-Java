@@ -22,44 +22,13 @@ public class Pilota {
         return cognome;
     }
 
-    public String getNazionalita() {
-        return nazionalita;
-    }
-
-    public int getEta() {
-        return eta;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setCognome(String cognome) {
-        this.cognome = cognome;
-    }
-
-    public void setNazionalita(String nazionalita) {
-        this.nazionalita = nazionalita;
-    }
-
-    public void setEta(int eta) {
-        if (eta <= 0) {
-            throw new IllegalArgumentException("L'età deve essere maggiore di 0.");
-        }
-        this.eta = eta;
+    public boolean equals(Pilota altroPilota) {
+        if (altroPilota == null) return false;
+        return this.nome.equalsIgnoreCase(altroPilota.nome) && this.cognome.equalsIgnoreCase(altroPilota.cognome);
     }
 
     @Override
     public String toString() {
         return String.format("Nome: %s Cognome: %s Nazionalità: %s Età: %d", nome, cognome, nazionalita, eta);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || o.getClass() != getClass()) {
-            return false; // Verifica che l'oggetto non sia nullo e appartenga alla stessa classe
-        }
-        Pilota p = (Pilota) o; // Cast sicuro dopo il controllo della classe
-        return nome.equals(p.nome) && cognome.equals(p.cognome) && eta == p.eta; // Confronto dei campi
     }
 }

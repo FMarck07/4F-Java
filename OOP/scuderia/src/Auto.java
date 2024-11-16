@@ -12,6 +12,14 @@ public class Auto {
         this.cilindrata = cilindrata;
     }
 
+    public Pilota getPilota() {
+        return pilota;
+    }
+
+    public double getCilindrata() {
+        return cilindrata;
+    }
+
     @Override
     public String toString() {
         return "Scuderia: " + scuderia + ", Pilota: [" + pilota + "], Cilindrata: " + cilindrata;
