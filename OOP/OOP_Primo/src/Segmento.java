@@ -7,6 +7,7 @@ public class Segmento {
         this.puntoB = puntoB;
     }
 
+    // Calcolo segmento
     public double lunghezza() {
         double deltaX = puntoB.getX() - puntoA.getX();
         double deltaY = puntoB.getY() - puntoA.getY();
