@@ -27,7 +27,7 @@ public class Main {
                         try {
                             if(mensola.size() < MAXNuMER){
                                 Libro nuovoLibro = FrontEnd.leggiLibro(tastiera, true, true);
-                                if (mensola.indexOf(nuovoLibro) == -1){
+                                if (!mensola.contains(nuovoLibro)){
                                     mensola.add(nuovoLibro);
                                     System.out.println("Libro inserito con successo");
                                 }
@@ -151,7 +151,7 @@ public class Main {
                                         case 1: // Precedente
                                             if (posizioneAttuale > 0) {
                                                 posizioneAttuale--;
-                                                System.out.println(mensola.get(posizioneAttuale));
+                                                System.out.println(mensola.get(posizioneAttuale).toString());
                                             } else {
                                                 System.out.println("Sei già alla prima posizione.");
                                             }
@@ -159,7 +159,7 @@ public class Main {
                                         case 2: // Successivo
                                             if (posizioneAttuale < mensola.size() - 1) {
                                                 posizioneAttuale++;
-                                                System.out.println(mensola.get(posizioneAttuale));
+                                                System.out.println(mensola.get(posizioneAttuale).toString());
                                             } else {
                                                 System.out.println("Sei già all'ultima posizione.");
                                             }
