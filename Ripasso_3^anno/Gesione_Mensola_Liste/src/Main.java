@@ -1,6 +1,7 @@
 import mensola.Libro;
 import frontScreen.FrontEnd;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +127,8 @@ public class Main {
                     case 9:
                         if (!mensola.isEmpty()) {
                             System.out.println("Inserisci data di pubblicazione");
-                            LocalDateTime data = LocalDateTime.parse(tastiera.nextLine());
+                            LocalDate data = LocalDate.parse(tastiera.nextLine());
+                            FrontEnd.data(mensola, data);
                         }
                         break;
                     case 10: // Nuova opzione: Navigazione dei libri
@@ -137,11 +139,11 @@ public class Main {
                                 boolean naviga = true;
                                 int posizioneAttuale = posIniziale;
 
-                                while (naviga) {
+                                do{
                                     System.out.println("Libro corrente: " + mensola.get(posizioneAttuale).toString());
                                     System.out.println("1-Precedente");
                                     System.out.println("2-Successivo");
-                                    System.out.println("3-Fine");
+                                    System.out.println("3-Exit");
                                     System.out.print("Scegli un'opzione: ");
                                     int scelta = Integer.parseInt(tastiera.nextLine());
 
@@ -168,7 +170,7 @@ public class Main {
                                         default:
                                             System.out.println("Opzione non valida.");
                                     }
-                                }
+                                }while(naviga);
                             } else {
                                 System.out.println("Posizione iniziale non valida.");
                             }
