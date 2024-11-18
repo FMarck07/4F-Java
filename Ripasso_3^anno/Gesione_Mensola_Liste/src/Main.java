@@ -17,7 +17,7 @@ public class Main {
         int posizione;
         final int MAXNuMER = 3;
 
-        String[] opzioni = {"Mensola", "1. Inserimento", "2. Leggi", "3. Cerca", "4. Rimuovi", "5. Cerca + Info", "6. Modifica Data Pubblicazione", "7. Find All", "8. Find All Autore", "9. Leggi data di pubblicazione", "10. Exit"};
+        String[] opzioni = {"Mensola", "1. Inserimento", "2. Leggi", "3. Cerca", "4. Rimuovi", "5. Cerca + Info", "6. Modifica Data Pubblicazione", "7. Find All", "8. Find All Autore", "9. Leggi data di pubblicazione", "10. Naviga Libri", "11. Exit"};
 
         try {
             do {
@@ -26,12 +26,6 @@ public class Main {
                         try {
                             if(mensola.size() < MAXNuMER){
                                 Libro nuovoLibro = FrontEnd.leggiLibro(tastiera, true, true);
-                                /*posizione = FrontEnd.MetodoConEccezione(mensola, nuovoLibro);
-
-                                if (posizione == -1) { // Aggiunta condizione
-                                    mensola.add(nuovoLibro);
-                                    System.out.println("Libro inserito con successo");
-                                }*/
                                 if (mensola.indexOf(nuovoLibro) == -1){
                                     mensola.add(nuovoLibro);
                                     System.out.println("Libro inserito con successo");
@@ -39,7 +33,6 @@ public class Main {
                                 else{
                                     throw new Exception("Il libro è già presente");
                                 }
-
                             }
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
@@ -47,14 +40,13 @@ public class Main {
                         break;
                     case 2:
                         if (!mensola.isEmpty()) {
-                            mensola.forEach(l-> System.out.println(l.toString()));
+                            mensola.forEach(l -> System.out.println(l.toString()));
                         } else {
                             System.out.println("Non ci sono libri da visualizzare nella mensola");
                         }
                         break;
                     case 3:
                         if (!mensola.isEmpty()) {
-
                             Libro cerca = FrontEnd.leggiLibro(tastiera, false, false);
                             posizione = mensola.indexOf(cerca);
                             if (posizione != -1) {
@@ -69,10 +61,9 @@ public class Main {
                     case 4:
                         if (!mensola.isEmpty()) {
                             Libro rimuovi = FrontEnd.leggiLibro(tastiera, false, false);
-                            if(FrontEnd.rimuovi(mensola,rimuovi)){
+                            if(FrontEnd.rimuovi(mensola, rimuovi)){
                                 System.out.println("Libro rimosso con successo");
-                            }
-                            else{
+                            } else {
                                 System.out.println("Il libro non è presente");
                             }
                         } else {
@@ -113,7 +104,7 @@ public class Main {
                             nuovo.Titolo = tastiera.nextLine();
                             List<Libro> trovati = FrontEnd.findAll(mensola, nuovo);
                             if (!trovati.isEmpty()) {
-                                mensola.forEach(l-> System.out.println(l.toString()));
+                                trovati.forEach(l -> System.out.println(l.toString()));
                             } else {
                                 System.out.println("Il libro non è presente");
                             }
@@ -126,19 +117,66 @@ public class Main {
                             autore.Autore = tastiera.nextLine();
                             List<Libro> autori = FrontEnd.Autore(mensola, autore);
                             if (!autori.isEmpty()) {
-                                mensola.forEach(l-> System.out.println(l.toString()));
+                                autori.forEach(l -> System.out.println(l.toString()));
                             } else {
                                 System.out.println("Autore non trovato");
                             }
                         }
                         break;
                     case 9:
-                        if(!mensola.isEmpty()){
+                        if (!mensola.isEmpty()) {
                             System.out.println("Inserisci data di pubblicazione");
                             LocalDateTime data = LocalDateTime.parse(tastiera.nextLine());
-
                         }
-                    case 10:
+                        break;
+                    case 10: // Nuova opzione: Navigazione dei libri
+                        if (!mensola.isEmpty()) {
+                            System.out.println("Inserisci la posizione iniziale (indice del libro): ");
+                            int posIniziale = Integer.parseInt(tastiera.nextLine());
+                            if (posIniziale >= 0 && posIniziale < mensola.size()) {
+                                boolean naviga = true;
+                                int posizioneAttuale = posIniziale;
+
+                                while (naviga) {
+                                    System.out.println("Libro corrente: " + mensola.get(posizioneAttuale).toString());
+                                    System.out.println("1-Precedente");
+                                    System.out.println("2-Successivo");
+                                    System.out.println("3-Fine");
+                                    System.out.print("Scegli un'opzione: ");
+                                    int scelta = Integer.parseInt(tastiera.nextLine());
+
+                                    switch (scelta) {
+                                        case 1: // Precedente
+                                            if (posizioneAttuale > 0) {
+                                                posizioneAttuale--;
+                                                System.out.println(mensola.get(posizioneAttuale));
+                                            } else {
+                                                System.out.println("Sei già alla prima posizione.");
+                                            }
+                                            break;
+                                        case 2: // Successivo
+                                            if (posizioneAttuale < mensola.size() - 1) {
+                                                posizioneAttuale++;
+                                                System.out.println(mensola.get(posizioneAttuale));
+                                            } else {
+                                                System.out.println("Sei già all'ultima posizione.");
+                                            }
+                                            break;
+                                        case 3: // Fine
+                                            naviga = false;
+                                            break;
+                                        default:
+                                            System.out.println("Opzione non valida.");
+                                    }
+                                }
+                            } else {
+                                System.out.println("Posizione iniziale non valida.");
+                            }
+                        } else {
+                            System.out.println("Non ci sono libri nella mensola");
+                        }
+                        break;
+                    case 11:
                         System.out.println("Exit");
                         quit = true;
                         break;
