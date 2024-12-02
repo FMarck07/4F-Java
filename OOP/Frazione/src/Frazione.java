@@ -40,7 +40,6 @@ public class Frazione {
     }
 
     public double somma(Frazione fr1) throws Exception {
-
         return ((double) this.numeratore / this.denominatore) + ((double) fr1.numeratore / fr1.denominatore);
     }
 
