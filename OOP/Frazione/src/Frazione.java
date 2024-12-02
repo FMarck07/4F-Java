@@ -2,33 +2,51 @@ public class Frazione {
     private int numeratore;
     private int denominatore;
 
-    public Frazione(int nominatore, int denominatore) throws Exception {
-        if(denominatore == 0){
-            throw new Exception("Il denominatore non può essere nullo");
+
+    public Frazione(int numeratore, int denominatore) throws Exception {
+        setDenominatore(denominatore);
+        setNumeratore(numeratore);
+    }
+
+    public Frazione(int numeratore) throws Exception {
+        this(numeratore, 5);
+    }
+
+    public int getNumeratore() {
+        return numeratore;
+    }
+
+
+    public void setNumeratore(int numeratore) {
+        this.numeratore = numeratore;
+    }
+
+
+    public int getDenominatore() {
+        return denominatore;
+    }
+
+
+    public void setDenominatore(int denominatore) throws Exception {
+        if (denominatore == 0) {
+            throw new Exception("Hai inserito lo zero come denominatore");
         }
-        this.numeratore = nominatore;
         this.denominatore = denominatore;
     }
 
-    public Frazione sommaFrazioni(Frazione addendo) throws Exception{
-        int numNuovo;
-        int denNuovo = 0;
-        if(this.denominatore != addendo.denominatore) {
-            denNuovo = this.denominatore * addendo.denominatore;
-        } else
-            denNuovo = this.denominatore;
-        numNuovo = (denNuovo / this.denominatore) * this.numeratore + (denNuovo / addendo.denominatore) * addendo.numeratore;
+    public Frazione sommaFrazione(Frazione fr) throws Exception {
+        Frazione nuova = new Frazione(this.numeratore * fr.denominatore + fr.numeratore * denominatore, fr.denominatore * this.denominatore);
+        return nuova;
+    }
 
-        return new Frazione(numNuovo, denNuovo);
+    public double somma(Frazione fr1) throws Exception {
+
+        return ((double) this.numeratore / this.denominatore) + ((double) fr1.numeratore / fr1.denominatore);
     }
-    public double sommaFrazioneValore(Frazione addendo) throws Exception{
-        Frazione f = sommaFrazioni(addendo);
-        double risultato = (double)f.numeratore / f.denominatore;
-        return risultato;
-    }
+
 
     @Override
     public String toString() {
-        return numeratore + "/" + denominatore;
+        return String.format(" %d/%d", numeratore, denominatore);
     }
 }
