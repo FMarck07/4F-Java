@@ -1,7 +1,7 @@
-import java.util.Scanner;
-import static utility.Tools.*;
 import java.util.Random;
-public class FrontEnd {
+import java.util.Scanner;
+
+class FrontEnd {
     public static Pilota leggiPilota(Scanner sc) throws Exception {
         System.out.println("Inserisci il nome del pilota:");
         String nome = sc.nextLine();
@@ -10,8 +10,7 @@ public class FrontEnd {
         System.out.println("Inserisci la nazionalità del pilota:");
         String nazionalità = sc.nextLine();
 
-        Pilota p = new Pilota(nome, cognome, nazionalità);
-        return p;
+        return new Pilota(nome, cognome, nazionalità);
     }
 
     public static Cronometro InserisciCronometro() throws Exception {

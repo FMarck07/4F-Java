@@ -1,4 +1,4 @@
-public class Scuderia implements Comparable<Scuderia> {
+class Scuderia implements Comparable<Scuderia> {
     private String nome;
     private Pilota nPilota;
     private int nAuto;
@@ -14,24 +14,8 @@ public class Scuderia implements Comparable<Scuderia> {
         return nome;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public Pilota getnPilota() {
         return nPilota;
-    }
-
-    public void setnPilota(Pilota nPilota) {
-        this.nPilota = nPilota;
-    }
-
-    public int getnAuto() {
-        return nAuto;
-    }
-
-    public void setnAuto(int nAuto) {
-        this.nAuto = nAuto;
     }
 
     public Cronometro getTempoGiro() {
@@ -44,11 +28,19 @@ public class Scuderia implements Comparable<Scuderia> {
 
     @Override
     public String toString() {
-        return String.format("Nome scuderia: %s, Nome Pilota: %s, nPilota: %d", nome, nPilota.getNome(), nAuto);
+        return String.format("Nome scuderia: %s, Pilota: %s, Auto: %d", nome, nPilota, nAuto);
     }
 
     @Override
     public int compareTo(Scuderia o) {
         return tempoGiro.compareTo(o.getTempoGiro());
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Scuderia scuderia = (Scuderia) obj;
+        return nome.equalsIgnoreCase(scuderia.nome);
     }
 }
