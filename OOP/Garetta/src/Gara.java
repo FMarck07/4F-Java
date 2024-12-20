@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 
-class Gara {
+public class Gara {
     private String nome;
     private ArrayList<Scuderia> griglia = new ArrayList<>();
     private String vincitore;
