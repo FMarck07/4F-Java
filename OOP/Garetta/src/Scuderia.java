@@ -1,4 +1,4 @@
-class Scuderia implements Comparable<Scuderia> {
+public class Scuderia implements Comparable<Scuderia> {
     private String nome;
     private Pilota nPilota;
     private int nAuto;
