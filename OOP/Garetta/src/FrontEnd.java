@@ -13,12 +13,12 @@ class FrontEnd {
         return new Pilota(nome, cognome, nazionalità);
     }
 
-    public static Cronometro InserisciCronometro() throws Exception {
+    public static Cronometro inserisciCronometro() throws Exception {
         Random rn = new Random();
-        int tempo = rn.nextInt(5000) + 1000; // Simulates a time between 1 and 6 seconds
+        int tempo = rn.nextInt(5000) + 1000;
         Cronometro cr = new Cronometro();
         cr.setStartTime();
-        Thread.sleep(tempo); // This simulates the delay in a race
+        Thread.sleep(tempo);
         cr.setEndTime();
         cr.calcolaIntTimer();
         return cr;
