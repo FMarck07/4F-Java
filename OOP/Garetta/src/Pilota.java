@@ -1,4 +1,4 @@
-class Pilota {
+public class Pilota {
     private String nome;
     private String cognome;
     private String nazionalità;
