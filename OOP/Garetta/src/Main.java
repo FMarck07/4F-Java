@@ -41,10 +41,10 @@ public class Main {
                                 }
 
                                 System.out.println("Inserisci il nome del pilota:");
-                                String nomePilota = sc.nextLine().trim();
+                                String nomePilota = sc.nextLine();
 
                                 System.out.println("Inserisci il cognome del pilota:");
-                                String cognomePilota = sc.nextLine().trim();
+                                String cognomePilota = sc.nextLine();
 
                                 Pilota pilotaSelezionato = null;
                                 boolean pilotaTrovato = false;
@@ -70,7 +70,7 @@ public class Main {
                                         System.out.println("Il pilota è già assegnato a una scuderia.");
                                     } else {
                                         System.out.println("Inserisci il nome della scuderia:");
-                                        String nomeScuderia = sc.nextLine().trim();
+                                        String nomeScuderia = sc.nextLine();
 
                                         boolean scuderiaEsistente = false;
 
