@@ -1,7 +1,7 @@
 import java.util.Random;
 import java.util.Scanner;
 
-class FrontEnd {
+public class FrontEnd {
     public static Pilota leggiPilota(Scanner sc) throws Exception {
         System.out.println("Inserisci il nome del pilota:");
         String nome = sc.nextLine();
