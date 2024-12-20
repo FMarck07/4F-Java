@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
-import java.util.Random;
 
 import static utility.Tools.*;
 
@@ -17,11 +15,11 @@ public class Main {
         while (!esci) {
             int scelta = Menu(opzioni, sc);
             switch (scelta) {
-                case 1: // Inserimento Pilota
+                case 1:
                     try {
                         Pilota p = FrontEnd.leggiPilota(sc);
                         if (piloti.contains(p)) {
-                            System.out.println("Errore: Pilota già esistente.");
+                            System.out.println("Pilota già esistente.");
                         } else {
                             piloti.add(p);
                             System.out.println("Pilota inserito: " + p);
@@ -31,68 +29,75 @@ public class Main {
                     }
                     break;
 
-                case 2: // Inserimento Scuderia
-                    boolean inserimentoCompletato = false;
-                    while (!inserimentoCompletato) {
+                case 2:
+                    boolean finito = false;
+                    while (!finito) {
                         try {
                             if (piloti.size() > 0) {
                                 System.out.println("Seleziona un pilota per la scuderia:");
-                                for (int i = 0; i < piloti.size(); i++) {
-                                    System.out.println("[" + (i + 1) + "] " + piloti.get(i));
+
+                                for (Pilota p : piloti) {
+                                    System.out.println("- " + p.getNome() + " " + p.getCognome());
                                 }
 
-                                int pilotaIndex = -1;
-                                while (pilotaIndex < 0 || pilotaIndex >= piloti.size()) {
-                                    try {
-                                        System.out.print("Inserisci il numero del pilota: ");
-                                        pilotaIndex = Integer.parseInt(sc.nextLine()) - 1;
-                                        if (pilotaIndex < 0 || pilotaIndex >= piloti.size()) {
-                                            System.out.println("Numero pilota non valido. Riprova.");
-                                        }
-                                    } catch (Exception e) {
-                                        System.out.println("Input non valido. Inserisci un numero valido.");
+                                System.out.println("Inserisci il nome del pilota:");
+                                String nomePilota = sc.nextLine().trim();
+
+                                System.out.println("Inserisci il cognome del pilota:");
+                                String cognomePilota = sc.nextLine().trim();
+
+                                Pilota pilotaSelezionato = null;
+                                boolean pilotaTrovato = false;
+
+                                for (Pilota p : piloti) {
+                                    if (p.getNome().equalsIgnoreCase(nomePilota) && p.getCognome().equalsIgnoreCase(cognomePilota)) {
+                                        pilotaSelezionato = p;
+                                        pilotaTrovato = true;
                                     }
                                 }
 
-                                Pilota pilota = piloti.get(pilotaIndex);
-                                boolean pilotaAssegnato = false;
-                                for (Scuderia s : scuderie) {
-                                    if (s.getnPilota().equals(pilota)) {
-                                        pilotaAssegnato = true;
-                                        break;
-                                    }
-                                }
-
-                                if (pilotaAssegnato) {
-                                    System.out.println("Errore: Il pilota è già assegnato a una scuderia.");
+                                if (!pilotaTrovato) {
+                                    System.out.println("Pilota non trovato. Reinserisci");
                                 } else {
-                                    System.out.println("Inserisci il nome della scuderia:");
-                                    String nomeScuderia = sc.nextLine();
-
-                                    boolean scuderiaEsistente = false;
+                                    boolean pilotaAssegnato = false;
                                     for (Scuderia s : scuderie) {
-                                        if (s.getNome().equalsIgnoreCase(nomeScuderia)) {
-                                            scuderiaEsistente = true;
-                                            break;
+                                        if (s.getnPilota().equals(pilotaSelezionato)) {
+                                            pilotaAssegnato = true;
                                         }
                                     }
 
-                                    if (scuderiaEsistente) {
-                                        System.out.println("Errore: Scuderia già esistente.");
+                                    if (pilotaAssegnato) {
+                                        System.out.println("Il pilota è già assegnato a una scuderia.");
                                     } else {
-                                        System.out.println("Inserisci il numero dell'auto: ");
-                                        int nAuto = Integer.parseInt(sc.nextLine());
-                                        Cronometro cr = FrontEnd.InserisciCronometro();
-                                        Scuderia scuderia = new Scuderia(nomeScuderia, pilota, nAuto);
-                                        scuderia.setTempoGiro(cr);
-                                        scuderie.add(scuderia);
-                                        System.out.println("Scuderia aggiunta: " + scuderia);
-                                        inserimentoCompletato = true;
+                                        System.out.println("Inserisci il nome della scuderia:");
+                                        String nomeScuderia = sc.nextLine().trim();
+
+                                        boolean scuderiaEsistente = false;
+
+                                        for (Scuderia s : scuderie) {
+                                            if (s.getNome().equalsIgnoreCase(nomeScuderia)) {
+                                                scuderiaEsistente = true;
+                                            }
+                                        }
+
+                                        if (scuderiaEsistente) {
+                                            System.out.println("Scuderia già esistente.");
+                                        } else {
+                                            System.out.println("Inserisci il numero dell'auto: ");
+                                            int nAuto = Integer.parseInt(sc.nextLine());
+                                            System.out.println("Comincia il Giro:");
+                                            Cronometro cr = FrontEnd.inserisciCronometro();
+                                            Scuderia scuderia = new Scuderia(nomeScuderia, pilotaSelezionato, nAuto);
+                                            scuderia.setTempoGiro(cr);
+                                            scuderie.add(scuderia);
+                                            System.out.println("Scuderia aggiunta: " + scuderia);
+                                            finito = true;
+                                        }
                                     }
                                 }
                             } else {
                                 System.out.println("Devi prima aggiungere almeno un pilota.");
-                                break;
+                                finito = true;
                             }
                         } catch (Exception e) {
                             System.out.println(e.getMessage());
@@ -100,20 +105,22 @@ public class Main {
                     }
                     break;
 
-                case 3: // Comincia Gara
+                case 3:
                     if (scuderie.size() > 0) {
                         try {
                             gara = new Gara("Gara Principale");
                             for (Scuderia scuderia : scuderie) {
                                 gara.aggiungiElemento(scuderia);
                             }
-
                             gara.ordinaGara();
                             System.out.println("Risultati della Gara:");
                             gara.getGriglia().forEach(System.out::println);
                             System.out.println("Il vincitore è: " + gara.getVincitore());
-                            System.out.println("Tempo totale impiegato dal vincitore: " + gara.getGriglia().get(0).getTempoGiro().getTempoGiro() + " secondi");
-                            gara.getGriglia().forEach(System.out::println);
+
+                            System.out.println("Tempi di tutte le scuderie:");
+                            for (Scuderia scuderia : gara.getGriglia()) {
+                                System.out.println(scuderia.getNome() + "- " + scuderia.getnPilota().getNome() + " " + scuderia.getnPilota().getCognome() + ": " + scuderia.getTempoGiro().getTempoGiro() + " secondi");
+                            }
                         } catch (Exception e) {
                             System.out.println("Errore durante l'ordinamento della gara: " + e.getMessage());
                         }
@@ -121,7 +128,6 @@ public class Main {
                         System.out.println("Devi aggiungere almeno una scuderia.");
                     }
                     break;
-
                 default:
                     esci = true;
                     break;
