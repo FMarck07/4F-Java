@@ -1,16 +1,17 @@
 package utility;
-import BackEnd.Genere;
 import BackEnd.Libro;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Tools {
-    /*public static void main(String[] args) {
 
-    }*/
-    private Tools()
-    {}; //impedisce di istanziare la classe
+
+import java.io.File;
+import java.util.Scanner;
+
+public class Tools {
+    private Tools() {} // Impedisce di instanziare la classe
+
     public static void clrScr() {
         try {
             new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -27,7 +28,7 @@ public class Tools {
         }
     }
 
-    public static int Menu(String opzioni[], Scanner tastiera) { // parametri formali
+    public static int Menu(String[] opzioni, Scanner tastiera) {
         int scelta;
 
         do {
@@ -36,19 +37,50 @@ public class Tools {
             System.out.println(opzioni[0]);
             System.out.println("------------------");
             for (int i = 1; i < opzioni.length; i++) {
-                System.out.println("[" + i + "]" + " " + opzioni[i]);
+                System.out.println("[" + i + "] " + opzioni[i]);
             }
-            scelta = (Integer.parseInt(tastiera.nextLine()));
-            //tastiera.nextLine();
-            if ((scelta < 1) || (scelta > opzioni.length - 1)) {
-                System.out.println("Opzione Sbagliata");
+            scelta = Integer.parseInt(tastiera.nextLine());
+            if (scelta < 1 || scelta > opzioni.length - 1) {
+                System.out.println("Opzione sbagliata");
                 Wait(2000);
             }
-        }
-        while ((scelta < 1) || (scelta > opzioni.length - 1));
-        //tastiera.nextLine();
+        } while (scelta < 1 || scelta > opzioni.length - 1);
         return scelta;
     }
+
+    // Metodo per selezionare un file
+    public static String selezionaFile(String directoryPath) {
+        File directory = new File(directoryPath);
+        if (!directory.exists() || !directory.isDirectory()) {
+            System.out.println("La directory specificata non esiste o non è valida.");
+            return null;
+        }
+
+        File[] files = directory.listFiles();
+        if (files == null || files.length == 0) {
+            System.out.println("Non ci sono file nella directory.");
+            return null;
+        }
+
+        System.out.println("Seleziona un file:");
+        for (int i = 0; i < files.length; i++) {
+            System.out.println("[" + (i + 1) + "] " + files[i].getName());
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        int scelta = -1;
+        while (scelta < 1 || scelta > files.length) {
+            try {
+                System.out.print("Inserisci il numero del file: ");
+                scelta = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Input non valido. Riprova.");
+            }
+        }
+
+        return files[scelta - 1].getAbsolutePath();
+    }
+
     public static Libro leggiLibro(Scanner tastiera, boolean opzioni){
         String[] sceltaGenere = {"Romanzo", "Manuale", "Thriller", "Generico"};
         System.out.println("Inserisci l'autore del libro");
