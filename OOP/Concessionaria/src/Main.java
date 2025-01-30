@@ -8,7 +8,7 @@ public class Main {
         Concessionaria concessionaria = new Concessionaria("VeicoloFast");
         boolean uscita = false;
 
-        String[] opzioni = {"MENU", "VISUALIZZA VEICOLI", "INSERISCI VEICOLO", "RIMUOVI VEICOLO", "AGGIORNA VEICOLO", "ESCI"};
+        String[] opzioni = {"MENU", "INSERISCI VEICOLO", "VISUALIZZA VEICOLI", "RIMUOVI VEICOLO", "AGGIORNA VEICOLO", "ESCI"};
 
         while (!uscita) {
             try {
@@ -16,8 +16,8 @@ public class Main {
                 int scelta = Tools.Menu(opzioni, sc);
 
                 switch (scelta) {
-                    case 1 -> concessionaria.stampaConcessionaria(); // Visualizza veicoli
-                    case 2 -> inserisciVeicolo(concessionaria, sc); // Inserisci veicolo
+                    case 1 -> inserisciVeicolo(concessionaria, sc); // Inserisci veicolo
+                    case 2 -> concessionaria.stampaConcessionaria(); // Visualizza veicoli
                     case 3 -> rimuoviVeicolo(concessionaria, sc); // Rimuovi veicolo
                     case 4 -> aggiornaVeicolo(concessionaria, sc); // Aggiorna veicolo
                     case 5 -> uscita = true; // Esci
