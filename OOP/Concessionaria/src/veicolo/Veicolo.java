@@ -37,6 +37,6 @@ public class Veicolo {
     // toString
     @Override
     public String toString() {
-        return String.format("Marca: %s, Modello: %s, Prezzo: %f", marca, modello, prezzo);
+        return String.format("Marca: %s, Modello: %s, Prezzo: %d", marca, modello, prezzo);
     }
 }

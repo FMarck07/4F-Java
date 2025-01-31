@@ -11,6 +11,11 @@ public class Concessionaria {
         this.nome = nome;
     }
 
+    // Verifica se la lista dei veicoli è vuota
+    public boolean isVuota() {
+        return veicoli.isEmpty();
+    }
+
     // Aggiunge un veicolo alla lista
     public void addVeicolo(Veicolo veicolo) throws Exception {
         if (veicoli.contains(veicolo)) {
@@ -21,6 +26,10 @@ public class Concessionaria {
 
     // Rimuove un veicolo dalla lista
     public void removeVeicolo(Veicolo veicolo) throws Exception {
+        if (isVuota()) {
+            throw new Exception("Nessun veicolo disponibile.");
+        }
+
         if (!veicoli.contains(veicolo)) {
             throw new Exception("Veicolo non trovato.");
         }
@@ -46,21 +55,16 @@ public class Concessionaria {
         String modello = sc.nextLine();
 
         if (nuovoVeicolo) {
-            System.out.println("Inserisci il prezzo:");
-            int prezzo = Integer.parseInt(sc.nextLine());
+            int prezzo = leggiPrezzo(sc);
 
-            String[] opzioni = {"AUTOMOBILE", "MOTO"};
+            String[] opzioni = {"OPZIONI", "AUTOMOBILE", "MOTO"};
             System.out.println("Scegli il tipo di veicolo:");
             int scelta = Tools.Menu(opzioni, sc);
 
             if (scelta == 1) {
-                System.out.println("Inserisci il numero di porte:");
-                int numeroPorte = Integer.parseInt(sc.nextLine());
-                return new Automobile(marca, modello, prezzo, numeroPorte);
+                return creaAutomobile(sc, marca, modello, prezzo);
             } else if (scelta == 2) {
-                System.out.println("Inserisci la cilindrata:");
-                int cilindrata = Integer.parseInt(sc.nextLine());
-                return new Moto(marca, modello, prezzo, cilindrata);
+                return creaMoto(sc, marca, modello, prezzo);
             }
         } else {
             return getVeicoloByMarcaModello(marca, modello);
@@ -69,8 +73,43 @@ public class Concessionaria {
         return null;
     }
 
+    // Metodo per leggere il prezzo con validazione
+    private int leggiPrezzo(Scanner sc) {
+        int prezzo;
+        while (true) {
+            try {
+                System.out.println("Inserisci il prezzo:");
+                prezzo = Integer.parseInt(sc.nextLine());
+                if (prezzo >= 0) break;
+                System.out.println("Il prezzo deve essere un numero positivo.");
+            } catch (NumberFormatException e) {
+                System.out.println("Input non valido. Inserisci un numero.");
+            }
+        }
+        return prezzo;
+    }
+
+    // Crea un'automobile
+    private Veicolo creaAutomobile(Scanner sc, String marca, String modello, int prezzo) {
+        System.out.println("Inserisci il numero di porte:");
+        int numeroPorte = Integer.parseInt(sc.nextLine());
+        return new Automobile(marca, modello, prezzo, numeroPorte);
+    }
+
+    // Crea una moto
+    private Veicolo creaMoto(Scanner sc, String marca, String modello, int prezzo) {
+        System.out.println("Inserisci la cilindrata:");
+        int cilindrata = Integer.parseInt(sc.nextLine());
+        return new Moto(marca, modello, prezzo, cilindrata);
+    }
+
     // Trova un veicolo per marca e modello
     public Veicolo getVeicoloByMarcaModello(String marca, String modello) {
+        if (isVuota()) {
+            System.out.println("Nessun veicolo disponibile.");
+            return null;
+        }
+
         for (Veicolo v : veicoli) {
             if (v.getMarca().equals(marca) && v.getModello().equals(modello)) {
                 return v;
@@ -82,21 +121,18 @@ public class Concessionaria {
 
     // Aggiorna un veicolo esistente
     public Veicolo updateVeicolo(Veicolo veicolo, Scanner sc) {
+        if (isVuota()) {
+            System.out.println("Nessun veicolo disponibile.");
+            return null;
+        }
+
         if (veicolo == null) {
             System.out.println("Veicolo non valido.");
             return null;
         }
 
-        String terzaOpzione; // Variabile per memorizzare la terza opzione
-
-        if (veicolo instanceof Automobile) {
-            terzaOpzione = "NUMERO DI PORTE"; // Se è un'automobile
-        } else {
-            terzaOpzione = "CILINDRATA"; // Se è una moto
-        }
-
-        // Creazione dell'array di opzioni
-        String[] opzioni = {"MODELLO", "PREZZO", terzaOpzione};
+        String terzaOpzione = (veicolo instanceof Automobile) ? "NUMERO DI PORTE" : "CILINDRATA";
+        String[] opzioni = {"OPZIONI", "MODELLO", "PREZZO", terzaOpzione};
         System.out.println("Cosa vuoi aggiornare?");
         int scelta = Tools.Menu(opzioni, sc);
 

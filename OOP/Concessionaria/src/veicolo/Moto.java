@@ -22,6 +22,6 @@ public class Moto extends Veicolo{
     // toString
     @Override
     public String toString() {
-        return  super.toString() + String.format("Cilindrata: %d", cilindrata);
+        return  super.toString() + String.format(", Cilindrata: %d", cilindrata);
     }
 }

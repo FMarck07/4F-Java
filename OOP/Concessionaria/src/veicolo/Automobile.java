@@ -22,6 +22,6 @@ public class Automobile extends Veicolo{
     // toString
     @Override
     public String toString() {
-        return  super.toString() + String.format("Numero di Porte: %d", numeroPorte);
+        return  super.toString() + String.format(", Numero di Porte: %d", numeroPorte);
     }
 }

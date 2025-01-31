@@ -23,11 +23,6 @@ public class Main {
                     case 5 -> uscita = true; // Esci
                     default -> System.out.println("Opzione non valida.");
                 }
-
-                if (!uscita) {
-                    System.out.println("\nPremi Invio per continuare...");
-                    sc.nextLine(); // Attende l'input dell'utente prima di continuare
-                }
             } catch (Exception e) {
                 System.out.println("Errore: " + e.getMessage());
             }
@@ -51,6 +46,11 @@ public class Main {
 
     // Metodo per rimuovere un veicolo
     private static void rimuoviVeicolo(Concessionaria concessionaria, Scanner sc) {
+        if (concessionaria.isVuota()) {
+            System.out.println("Nessun veicolo disponibile.");
+            return;
+        }
+
         Veicolo veicolo = concessionaria.leggiVeicolo(sc, false);
         if (veicolo != null) {
             try {
@@ -64,6 +64,11 @@ public class Main {
 
     // Metodo per aggiornare un veicolo
     private static void aggiornaVeicolo(Concessionaria concessionaria, Scanner sc) {
+        if (concessionaria.isVuota()) {
+            System.out.println("Nessun veicolo disponibile.");
+            return;
+        }
+
         Veicolo veicolo = concessionaria.leggiVeicolo(sc, false);
         if (veicolo != null) {
             Veicolo veicoloAggiornato = concessionaria.updateVeicolo(veicolo, sc);
