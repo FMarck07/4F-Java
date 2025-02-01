@@ -40,9 +40,6 @@ public class Portatili extends Computer{
         return tipo;
     }
 
-    /*I PC portatili sono caratterizzati dal peso, dalle dimensioni
-        fisiche (altezza, larghezza e profondità) e dalle dimensioni del video.*/
-
     @Override
     public String toString() {
         return super.toString() + String.format(", Peso %d, Altezza: %d, Larghezza: %d, Profondità: %d, Dimensioni del video: %d", peso, altezza, larghezza, profondita, dimensioniVideo);
