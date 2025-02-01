@@ -31,7 +31,7 @@ public class Server extends Computer{
     }
 
     public void setTipo(tipi tipo) {
-        this.tipo = tipi.valueOf(String.format(String.valueOf(getClass())));
+            this.tipo = tipo;
     }
 
     public tipi getTipo() {
