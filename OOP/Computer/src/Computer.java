@@ -58,12 +58,6 @@ public class Computer {
         this.SO = SO;
     }
 
-
-    /*il tipo di processore,
-        la dimensione della memoria RAM, la dimensione
-        della memoria di massa, la marca, il modello e
-        il sistema operativo*/
-
     @Override
     public String toString() {
         return String.format("Processore %s, Memoria Ram: %d, Dimensione Memoria Massa: %s, Marca: %s, Modello %s, SO: %s", processore, ram, memoriaMassa, marca, modello, SO);
