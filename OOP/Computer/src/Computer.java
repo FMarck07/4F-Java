@@ -74,7 +74,7 @@ public class Computer {
         if(!(o instanceof Computer computer)){
             return false;
         }else{
-            return computer.marca.equals(modello) && computer.marca.equals(marca);
+            return computer.modello.equals(modello) && computer.marca.equals(marca);
         }
     }
 
