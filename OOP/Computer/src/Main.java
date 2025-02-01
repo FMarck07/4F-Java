@@ -23,11 +23,25 @@ public class Main {
 
 
 
-        Server s = new Server("i7", 37, 52, "Asus", "Cicciogamer89", "10", 52, false, tipi.Server);
-        PCfissi pc1 = new PCfissi("i7", 32, 1, "Asus", "15000", "10", Contenitore.medio, "1050ti", tipi.PC);
-        System.out.println(s);
-        System.out.println(pc1);
-        Computer pc2 = new Server("i7", 32, 1, "Asus", "15000", "15", 52, false, tipi.Server);
-        System.out.println(pc2);
+        Server server = new Server("Xeon", 64, 1000, "Dell", "PowerEdge", "Linux", 2, true, tipi.Server);
+        System.out.println(server);
+
+        // Creazione di un oggetto PCfissi
+        PCfissi desktop = new PCfissi("i7", 16, 500, "HP", "Pavilion", "Windows", Contenitore.medio, "NVIDIA GTX 1660", tipi.PC);
+        System.out.println(desktop);
+
+        // Creazione di un oggetto Portatili
+        Portatili notebook = new Portatili("i5", 8, 256, "Lenovo", "ThinkPad", "Windows", 2, 15, 35, 25, 15, tipi.Notebook);
+        System.out.println(notebook);
+
+        // Up-casting
+        Computer computer1 = new Server("Xeon", 32, 2000, "IBM", "SystemX", "Unix", 4, false, tipi.Server);
+        System.out.println(computer1);
+
+        // Down-casting
+        if (computer1 instanceof Server) {
+            Server server2 = (Server) computer1;
+            System.out.println("Down-casting riuscito: " + server2.getnProcessori());
+        }
     }
 }
