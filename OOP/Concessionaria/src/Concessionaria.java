@@ -159,4 +159,37 @@ public class Concessionaria {
 
         return veicolo;
     }
+
+    public void modificaPrezzoVeicolo(Veicolo veicolo, int nuovoPrezzo) throws Exception {
+        if (veicolo == null) {
+            throw new Exception("Veicolo non valido.");
+        }
+
+        if (!veicoli.contains(veicolo)) {
+            throw new Exception("Veicolo non trovato nella concessionaria.");
+        }
+
+        veicolo.setPrezzo(nuovoPrezzo);
+        System.out.println("Prezzo del veicolo aggiornato con successo.");
+    }
+
+    // Metodo per restituire tutti i veicoli con la stessa marca
+    public void getVeicoliByMarca(String marca) {
+        for (Veicolo v : veicoli) {
+            if (v.getMarca().equalsIgnoreCase(marca)) {
+                System.out.println(v);
+            }
+        }
+    }
+
+    // Metodo per restituire tutti i veicoli con un prezzo minore di un valore inserito
+    public void getVeicoliByPrezzoMinore(int prezzoMax) {
+        for (Veicolo v : veicoli) {
+            if (v.getPrezzo() < prezzoMax) {
+                System.out.println(v);
+            }
+        }
+    }
+
+
 }
