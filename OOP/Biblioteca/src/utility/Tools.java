@@ -1,5 +1,5 @@
 package utility;
-import BackEnd.Libro;
+import BackEnd.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -81,15 +81,19 @@ public class Tools {
         return files[scelta - 1].getAbsolutePath();
     }
 
-    public static Libro leggiLibro(Scanner tastiera, boolean opzioni){
-        String[] sceltaGenere = {"Romanzo", "Manuale", "Thriller", "Generico"};
+    public static Libro leggiLibro(Scanner tastiera, boolean opzioni) {
+        System.out.println("Seleziona il tipo di libro:");
+        System.out.println("[1] Manuale");
+        System.out.println("[2] Romanzo");
+        System.out.println("[3] Thriller");
+        int tipo = Integer.parseInt(tastiera.nextLine());
+
         System.out.println("Inserisci l'autore del libro");
         String autore = tastiera.nextLine();
         System.out.println("Inserisci il titolo del libro");
         String titolo = tastiera.nextLine();
         System.out.println("Inserisci il numero pagine del libro");
 
-        // Usa nextLine() e poi prova a convertire in intero
         int nPagine = -1;
         while (nPagine < 1) {
             try {
@@ -103,9 +107,28 @@ public class Tools {
             }
         }
 
-        Libro l = new Libro(autore, titolo, nPagine);
-        Menu(sceltaGenere, tastiera);
-        return l;
+        switch (tipo) {
+            case 1:
+                System.out.println("Inserisci l'argomento del manuale:");
+                String argomento = tastiera.nextLine();
+                System.out.println("Seleziona il livello del manuale:");
+                System.out.println("[1] Base");
+                System.out.println("[2] Principiante");
+                System.out.println("[3] Esperto");
+                int livelloScelta = Integer.parseInt(tastiera.nextLine());
+                Manuale.Livello livello = Manuale.Livello.values()[livelloScelta - 1];
+                return new Manuale(autore, titolo, nPagine, argomento, livello);
+            case 2:
+                System.out.println("Inserisci il genere letterario del romanzo:");
+                String genereLetterario = tastiera.nextLine();
+                return new Romanzo(autore, titolo, nPagine, genereLetterario);
+            case 3:
+                System.out.println("Il thriller è derivato da una serie TV? (s/n)");
+                boolean derivatoDaSerieTV = tastiera.nextLine().equalsIgnoreCase("s");
+                return new Thriller(autore, titolo, nPagine, derivatoDaSerieTV);
+            default:
+                throw new IllegalArgumentException("Tipo di libro non valido.");
+        }
     }
     public void visualizzaMensola(ArrayList<Libro> volumi){
         for(Libro l : volumi){

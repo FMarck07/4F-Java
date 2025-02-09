@@ -1,11 +1,11 @@
 package BackEnd;
+
 import java.util.Objects;
 
-public class Libro {
+public abstract class Libro {
     private String autore, titolo;
     private int nPagine;
     private final double costoPagina = 0.05;
-    private Genere tipo;
 
     public Libro(String autore, String titolo, int nPagine) {
         this.autore = autore;
@@ -17,11 +17,10 @@ public class Libro {
         this(autore, titolo, 0);
     }
 
-    public Libro (Libro l){
+    public Libro(Libro l) {
         this.autore = l.autore;
         this.titolo = l.titolo;
         this.nPagine = l.nPagine;
-        this.tipo = l.tipo;
     }
 
     public String getAutore() {
@@ -39,8 +38,9 @@ public class Libro {
     public double getCostoPagina() {
         return costoPagina;
     }
+
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("Autore: %s Titolo: %s NumeroPagine: %d Costo: %.2f", autore, titolo, nPagine, costoPagina * nPagine);
     }
 
@@ -50,8 +50,8 @@ public class Libro {
     }
 
     @Override
-    public boolean equals(Object o){
-        if(o instanceof Libro){
+    public boolean equals(Object o) {
+        if (o instanceof Libro) {
             return this.autore.equals(((Libro) o).autore) && this.titolo.equals(((Libro) o).titolo);
         }
         return false;
