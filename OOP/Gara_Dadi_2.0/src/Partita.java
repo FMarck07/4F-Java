@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 public class Partita {
     private Giocatore g1;
     private Giocatore g2;
@@ -21,33 +19,21 @@ public class Partita {
 
     public void round() {
         if (fineGara()) {
-            System.out.println("La gara è già terminata.");
-            return;
+            return; // La gara è già terminata
         }
 
         int n1 = g1.lanciaDado();
         int n2 = g2.lanciaDado();
         roundGiocati++;
 
-        System.out.println("\n--- Round " + roundGiocati + " ---");
-        System.out.println(g1.getNome() + " ha lanciato: " + n1);
-        System.out.println(g2.getNome() + " ha lanciato: " + n2);
-
         if (n1 > n2) {
             g1.incrementaVittorie();
-            System.out.println(g1.getNome() + " vince il round!");
         } else if (n2 > n1) {
             g2.incrementaVittorie();
-            System.out.println(g2.getNome() + " vince il round!");
         } else {
             g1.incrementaVittorie();
             g2.incrementaVittorie();
-            System.out.println("Il round è un pareggio!");
         }
-
-        System.out.println("Vittorie totali:");
-        System.out.println(g1);
-        System.out.println(g2);
     }
 
     public boolean fineGara() {
@@ -58,28 +44,22 @@ public class Partita {
         roundGiocati = 0;
         g1 = new Giocatore(g1.getNome());
         g2 = new Giocatore(g2.getNome());
-        System.out.println("\nLa partita è stata resettata. Tutti i punteggi sono stati azzerati.");
     }
 
-    public void giocaPartita() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Inserisci il numero di round:");
-        setRound(sc.nextInt());
+    public Giocatore getGiocatore1() {
+        return g1;
+    }
 
-        for (int i = 0; i < nRound; i++) {
-            System.out.println("\nPremi Invio per iniziare il round...");
-            sc.nextLine();
-            round();
-        }
+    public Giocatore getGiocatore2() {
+        return g2;
+    }
 
-        System.out.println(winner());
+    public int getRoundGiocati() {
+        return roundGiocati;
+    }
 
-        System.out.println("\nVuoi resettare la partita e ricominciare? (s/n)");
-        String risposta = sc.nextLine();
-        if (risposta.equalsIgnoreCase("s")) {
-            resetGame();
-            giocaPartita();
-        }
+    public int getnRound() {
+        return nRound;
     }
 
     public String winner() {
