@@ -67,11 +67,6 @@ public class Partita {
             return "Non è stato ancora eseguito un round.";
         }
 
-        System.out.println("\n--- Risultato Finale ---");
-        System.out.println("Round giocati: " + roundGiocati);
-        System.out.println(g1);
-        System.out.println(g2);
-
         if (g1.getnVittorie() > g2.getnVittorie()) {
             return "Ha vinto il giocatore " + g1.getNome() + "!";
         } else if (g2.getnVittorie() > g1.getnVittorie()) {
