@@ -25,6 +25,10 @@ public class Main {
         }
 
 
+        System.out.println("\n--- Risultato Finale ---");
+        System.out.println("Round giocati: " + p.getRoundGiocati());
+        System.out.println(g1);
+        System.out.println(g2);
         System.out.println(p.winner());
 
         System.out.println("\nVuoi resettare la partita e ricominciare? (s/n)");
