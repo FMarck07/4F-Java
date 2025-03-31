@@ -1,3 +1,10 @@
+import java.util.Objects;
+
+/**
+* metodo per i prodottiElettronico
+ * @author Francesco Marchetto
+ * */
+
 public abstract class ProdottoElettronico implements Prodotto {
     private String codiceProdotto;
     private String marca;
@@ -31,6 +38,19 @@ public abstract class ProdottoElettronico implements Prodotto {
     @Override
     public String toString() {
         return String.format("Codice: %s, Marca: %s, Prezzo: %.2f", codiceProdotto, marca, prezzo);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+       if(o instanceof ProdottoElettronico prodotto){
+           return prodotto.codiceProdotto.equals(codiceProdotto);
+       }
+       return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(codiceProdotto, marca, prezzo);
     }
 
     @Override

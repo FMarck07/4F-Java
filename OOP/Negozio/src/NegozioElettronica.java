@@ -3,12 +3,16 @@ import java.util.ArrayList;
 public class NegozioElettronica {
     private ArrayList<Prodotto> prodotti = new ArrayList<>();
 
-    public void aggiungiProdotto(Prodotto prodotto) {
-        prodotti.add(prodotto.clone());
+    public void aggiungiProdotto(Prodotto prodotto) throws Exception {
+        if(!prodotti.contains(prodotto)){
+            prodotti.add(prodotto.clone());
+        }else{
+            throw new Exception("Prodotto già presente");
+        }
     }
 
-    public void rimuoviProdotto(String codice) {
-        prodotti.removeIf(p -> p.getCodice().equals(codice));
+    public boolean rimuoviProdotto(String codice) {
+        return prodotti.removeIf(p -> p.getCodice().equals(codice));
     }
 
     public Prodotto cercaProdotto(String codice) {
