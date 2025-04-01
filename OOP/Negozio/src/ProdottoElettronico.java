@@ -1,10 +1,5 @@
 import java.util.Objects;
 
-/**
-* metodo per i prodottiElettronico
- * @author Francesco Marchetto
- * */
-
 public abstract class ProdottoElettronico implements Prodotto {
     private String codiceProdotto;
     private String marca;
@@ -42,10 +37,10 @@ public abstract class ProdottoElettronico implements Prodotto {
 
     @Override
     public boolean equals(Object o) {
-       if(o instanceof ProdottoElettronico prodotto){
-           return prodotto.codiceProdotto.equals(codiceProdotto);
-       }
-       return false;
+        if(o instanceof ProdottoElettronico prodotto){
+            return prodotto.codiceProdotto.equals(codiceProdotto);
+        }
+        return false;
     }
 
     @Override

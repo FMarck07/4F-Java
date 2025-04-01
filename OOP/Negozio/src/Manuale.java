@@ -1,8 +1,9 @@
 public class Manuale extends Libro {
     private String argomento;
 
-    public Manuale(String nome, String descrizione, String autore, String isbn, double prezzo, int quantita, String argomento) {
-        super(nome, descrizione, autore, isbn, prezzo, quantita);
+    public Manuale(String nome, String descrizione, String autore, String codice,
+                   double prezzo, int quantita, String argomento) {
+        super(nome, descrizione, autore, codice, prezzo, quantita);
         this.argomento = argomento;
     }
 

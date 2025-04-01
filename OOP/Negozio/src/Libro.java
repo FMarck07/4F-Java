@@ -2,22 +2,22 @@ public class Libro implements Prodotto, Cloneable {
     private String nome;
     private String descrizione;
     private String autore;
-    private String isbn;
+    private String codice;
     private double prezzo;
     private int quantita;
 
-    public Libro(String nome, String descrizione, String autore, String isbn, double prezzo, int quantita) {
+    public Libro(String nome, String descrizione, String autore, String codice, double prezzo, int quantita) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.autore = autore;
-        this.isbn = isbn;
+        this.codice = codice;
         this.prezzo = prezzo;
         this.quantita = quantita;
     }
 
     @Override
     public String getCodice() {
-        return isbn;
+        return codice;
     }
 
     @Override
@@ -42,10 +42,6 @@ public class Libro implements Prodotto, Cloneable {
         return autore;
     }
 
-    public String getIsbn() {
-        return isbn;
-    }
-
     public int getQuantita() {
         return quantita;
     }
@@ -56,7 +52,8 @@ public class Libro implements Prodotto, Cloneable {
 
     @Override
     public String toString() {
-        return String.format("Nome: %s, Autore: %s, ISBN: %s, Prezzo: %.2f, Quantità: %d", nome, autore, isbn, prezzo, quantita);
+        return String.format("Nome: %s, Autore: %s, Codice: %s, Prezzo: %.2f, Quantità: %d",
+                nome, autore, codice, prezzo, quantita);
     }
 
     @Override
@@ -64,7 +61,7 @@ public class Libro implements Prodotto, Cloneable {
         try {
             return (Libro) super.clone();
         } catch (CloneNotSupportedException e) {
-            throw new AssertionError(); // Non dovrebbe mai accadere
+            throw new AssertionError();
         }
     }
 }
